@@ -1,17 +1,30 @@
 package longestvalidparanthesis;
 
+import java.util.ArrayDeque;
+
 class Solution{
      public int longestValidParentheses(String s) {
         if(s.length()==0||s==null) return 0;
-        int m=s.length();
-        int i=1;
-        int r=0;
-        while(m>=0 && i<s.length()){
-            if(s.charAt(i-1)=='(' && s.charAt(i)==')') r+=2;
-            m--;
-            i++;
+        int maxlen=0;
+ArrayDeque<Integer> stack=new ArrayDeque<>();
+stack.push(-1);
+int i=0;
+while(i<s.length()){
+    char c=s.charAt(i);
+    if(c=='('){
+        stack.push(i);
+    }
+    else{
+        stack.pop();
+        if(stack.isEmpty()){
+            stack.push(i);
         }
-        return r;
+        else{
+            maxlen=Math.max(maxlen,i-stack.peek());
+        }
+    }
+}
+       return maxlen;
     }
 }
 
